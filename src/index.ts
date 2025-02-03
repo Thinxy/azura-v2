@@ -1,10 +1,8 @@
-import http from "http";
-
-import { Middleware, Plugin, ServerOptions } from "./@types";
+import { Middleware, Plugin, RouterHandler, ServerOptions } from "./@types";
 import { RouterManager } from "./router/routerManager";
-import { setupRoutes } from "./@types/routes/methods.type";
 import { LRUCache } from "./utils/cacheManager";
 import serverConnection from "./core/server";
+import setupCors from "./plugins/cors";
 
 export class AzuraServer {
   public router: RouterManager;
@@ -18,7 +16,9 @@ export class AzuraServer {
     this.options = { jsonParser: options.jsonParser ?? true, ...options };
     this.cache = new LRUCache(options.cacheSize ?? 1000);
 
-    setupRoutes(this, this.router);
+    if (this.options.cors) {
+      this.use(setupCors()!);
+    }
   }
 
   use(middleware: Middleware) {
@@ -30,7 +30,23 @@ export class AzuraServer {
     this.plugins.push(plugin);
   }
 
-  start(port: number | 3000, callback?: () => void) {
-    serverConnection(port, callback, this.options.logging);
+  get(path: string, handler: RouterHandler) {
+    this.router.addRoute("GET", path, handler);
+  }
+
+  post(path: string, handler: RouterHandler) {
+    this.router.addRoute("POST", path, handler);
+  }
+
+  put(path: string, handler: RouterHandler) {
+    this.router.addRoute("PUT", path, handler);
+  }
+
+  delete(path: string, handler: RouterHandler) {
+    this.router.addRoute("DELETE", path, handler);
+  }
+
+  start(port?: number | 3000, callback?: () => void) {
+    serverConnection(this, port ?? 3000, callback);
   }
 }

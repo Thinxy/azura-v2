@@ -9,6 +9,7 @@ export interface ServerOptions {
   logging?: boolean;
   jsonParser?: boolean;
   cacheSize?: number;
+  cors?: boolean;
   database?: {
     uri: string;
     name?: string;
