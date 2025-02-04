@@ -9,7 +9,7 @@ import { parseRequest } from "./http/request";
 import { Response } from "../@types";
 
 export default function serverConnection(
-  app: AzuraServer, // 👈 Passa a instância correta
+  app: AzuraServer,
   port: number = 3000,
   callback?: () => void
 ) {
@@ -42,10 +42,10 @@ export default function serverConnection(
         const middleware = app.middleware[index++];
         middleware(parsedReq, res as Response, next);
       } else {
-        const routeHandler = app.router.match(parsedReq.method, parsedReq.path);
-        if (routeHandler) {
+        const routeMatch = app.router.match(parsedReq.method, parsedReq.path);
+        if (routeMatch) {
           const response = createResponse(res);
-          routeHandler(parsedReq, response);
+          routeMatch.handler(parsedReq, response);
 
           const end = Date.now();
           const duration = end - start;
