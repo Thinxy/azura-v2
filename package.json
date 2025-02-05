@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node .",
-    "test": "ts-node src/test/index.test.ts",
+    "test": "ts-node /test/index.test.ts",
     "dev": "ts-node -r tsconfig-paths/register --transpiler sucrase/ts-node-plugin src/index.ts",
     "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist"
   },

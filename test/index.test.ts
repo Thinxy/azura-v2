@@ -1,4 +1,4 @@
-import { AzuraServer } from "..";
+import { AzuraServer } from "../src";
 
 const app = new AzuraServer({ logging: true, jsonParser: true, swagger: true, cors: true });
 
