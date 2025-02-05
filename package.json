@@ -1,5 +1,5 @@
 {
-  "name": "@atosjs/azurav1",
+  "name": "@atosjs/azura",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
