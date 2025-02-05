@@ -6,20 +6,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get(
-  "/test",
-  (req, res) => {
-    res.send("Teste Swagger");
-  },
-  {
-    summary: "Teste",
-    description: "Teste",
-    tags: ["test"],
-    responses: {
-      200: { description: "Resposta retornada com sucesso" },
-      500: { description: "Erro interno do servidor" },
-    },
-  }
-);
+app.get("/test", (req, res, swagger) => {
+  swagger({ summary: "Teste", description: "Teste", tags: ["test"] });
+
+  res.send("Teste Swagger");
+});
 
 app.start();

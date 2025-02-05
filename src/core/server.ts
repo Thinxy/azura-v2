@@ -6,7 +6,7 @@ import figures from "figures";
 import { AzuraServer } from "..";
 import { createResponse } from "./http/response";
 import { parseRequest } from "./http/request";
-import { Response } from "../@types";
+import { Response, RouteMeta } from "../@types";
 
 export default function serverConnection(
   app: AzuraServer,
@@ -42,10 +42,16 @@ export default function serverConnection(
         const middleware = app.middleware[index++];
         middleware(parsedReq, res as Response, next);
       } else {
-        const routeMatch = app.router.match(parsedReq.method, parsedReq.path);
-        if (routeMatch) {
+        const routes = app.router.getRoutes();
+        const route = routes[parsedReq.method]?.[parsedReq.path];
+
+        if (route) {
           const response = createResponse(res);
-          routeMatch.handler(parsedReq, response);
+          const swagger = (meta: RouteMeta) => {
+            parsedReq.routeMeta = meta;
+          };
+
+          route.handler(parsedReq, response, swagger);
 
           const end = Date.now();
           const duration = end - start;

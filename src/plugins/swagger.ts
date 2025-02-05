@@ -1,14 +1,4 @@
-import { RouteMeta, RouterHandler } from "../@types";
 import { RouterManager } from "../router/routerManager";
-
-export function swagger(meta: RouteMeta) {
-  return function (handler: RouterHandler) {
-    return (req: any, res: any) => {
-      req.routeMeta = meta;
-      handler(req, res);
-    };
-  };
-}
 
 export function swaggerDocs(routerManager: RouterManager) {
   const routesData = routerManager.getRoutes();

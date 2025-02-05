@@ -24,6 +24,11 @@ export class AzuraServer {
     if (this.options.swagger) {
       swaggerRender(this.router);
     }
+
+    this.router.addRoute("get", "/favicon.ico", (req, res) => {
+      res.writeHead(204);
+      res.end();
+    });
   }
 
   use(middleware: Middleware) {
@@ -35,20 +40,20 @@ export class AzuraServer {
     this.plugins.push(plugin);
   }
 
-  get(path: string, handler: RouterHandler, meta?: RouteMeta) {
-    this.router.addRoute("GET", path, handler, meta);
+  get(path: string, handler: RouterHandler) {
+    this.router.addRoute("GET", path, handler);
   }
 
-  post(path: string, handler: RouterHandler, meta?: RouteMeta) {
-    this.router.addRoute("POST", path, handler, meta);
+  post(path: string, handler: RouterHandler) {
+    this.router.addRoute("POST", path, handler);
   }
 
-  put(path: string, handler: RouterHandler, meta?: RouteMeta) {
-    this.router.addRoute("PUT", path, handler, meta);
+  put(path: string, handler: RouterHandler) {
+    this.router.addRoute("PUT", path, handler);
   }
 
-  delete(path: string, handler: RouterHandler, meta?: RouteMeta) {
-    this.router.addRoute("DELETE", path, handler, meta);
+  delete(path: string, handler: RouterHandler) {
+    this.router.addRoute("DELETE", path, handler);
   }
 
   start(port?: number | 3000, callback?: () => void) {
