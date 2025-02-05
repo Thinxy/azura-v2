@@ -13,7 +13,7 @@ test.yaml
 node_modules/
 .npmrc
 
-# Ignorar o arquivo de lock do npm (opcional)
+# Ignorar o arquivo de lock do npm (opc)
 package-lock.json
 .env
 atos.*
