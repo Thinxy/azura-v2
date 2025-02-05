@@ -1,2 +1,8 @@
-node_modules
-/src/test/*
+node_modules/
+package-lock.json
+dist/
+.npmrc
+.env
+test.json
+test.yaml
+atos.*
