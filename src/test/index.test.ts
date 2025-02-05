@@ -1,6 +1,6 @@
 import { AzuraServer } from "..";
 
-const app = new AzuraServer({ logging: true, jsonParser: true, swagger: true });
+const app = new AzuraServer({ logging: true, jsonParser: true, swagger: true, cors: true });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

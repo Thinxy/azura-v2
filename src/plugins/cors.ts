@@ -1,8 +1,6 @@
 import { AzuraServer } from "..";
 
-export default function setupCors() {
-  var server = new AzuraServer();
-
+export default function setupCors(server: AzuraServer) {
   server.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");

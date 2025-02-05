@@ -18,7 +18,7 @@ export class AzuraServer {
     this.cache = new LRUCache(options.cacheSize ?? 1000);
 
     if (this.options.cors) {
-      this.use(setupCors()!);
+      this.use(setupCors(this)!);
     }
 
     if (this.options.swagger) {
