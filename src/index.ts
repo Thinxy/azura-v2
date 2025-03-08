@@ -34,7 +34,8 @@ export class AzuraServer {
         this.options = { ...this.options, ...config };
       }
     } catch (error) {
-      console.error("Erro ao carregar o arquivo de configuração:", error);
+      console.error(error);
+      process.exit(1);
     }
   }
 
