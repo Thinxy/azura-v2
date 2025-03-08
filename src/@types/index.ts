@@ -32,7 +32,13 @@ export type RouteMeta = {
   operationId?: string;
 };
 
+interface ConfigParams {
+  port?: number;
+  callback?: () => void;
+}
+
 export interface ServerOptions {
+  config?: ConfigParams;
   logging?: boolean;
   jsonParser?: boolean;
   cacheSize?: number;

@@ -1,30 +1,35 @@
-import { Middleware, Plugin, RouteMeta, RouterHandler, ServerOptions } from "./@types";
+import { Middleware, Plugin, RouterHandler, ServerOptions } from "./@types";
 import { RouterManager } from "./router/routerManager";
 import { LRUCache } from "./utils/cacheManager";
 import serverConnection from "./core/server";
-import setupCors from "./plugins/cors";
 import { swaggerRender } from "./plugins/swagger";
+import setupCors from "./plugins/cors";
+import { loadConfig } from "./utils/configManager";
 
 export class AzuraServer {
+  private static instance: AzuraServer | null = null;
+
   public router: RouterManager;
   public options: ServerOptions;
   public middleware: Middleware[] = [];
   public plugins: Plugin[] = [];
   public cache: LRUCache;
 
-  constructor(options: ServerOptions = {}) {
+  constructor(options?: ServerOptions) {
     this.router = new RouterManager();
-    this.options = { jsonParser: options.jsonParser ?? true, ...options };
-    this.cache = new LRUCache(options.cacheSize ?? 1000);
+    this.options = { jsonParser: options?.jsonParser ?? true, ...options };
+    this.cache = new LRUCache(options?.cacheSize ?? 1000);
 
-    if (this.options.cors) {
-      this.use(setupCors(this)!);
-    }
+    this.initializePlugins();
+    this.setupDefaultRoutes();
+  }
 
-    if (this.options.swagger) {
-      swaggerRender(this.router);
-    }
+  private initializePlugins() {
+    if (this.options.cors) this.use(setupCors(this)!);
+    if (this.options.swagger) swaggerRender(this.router);
+  }
 
+  private setupDefaultRoutes() {
     this.router.addRoute("get", "/favicon.ico", (req, res) => {
       res.writeHead(204);
       res.end();
@@ -56,7 +61,18 @@ export class AzuraServer {
     this.router.addRoute("DELETE", path, handler);
   }
 
-  start(port?: number | 3000, callback?: () => void) {
-    serverConnection(this, port ?? 3000, callback);
+  static async start(callback?: () => void) {
+    if (!this.instance) {
+      try {
+        const config = await loadConfig();
+        this.instance = new AzuraServer(config);
+      } catch (error) {
+        console.error("❌ Erro ao carregar a configuração:", error);
+        process.exit(1);
+      }
+    }
+
+    const port = this.instance.options.config?.port ?? 3000;
+    serverConnection(this.instance, port, callback);
   }
 }
