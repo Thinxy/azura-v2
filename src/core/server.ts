@@ -14,15 +14,15 @@ export default function serverConnection(
   callback?: () => void
 ) {
   if (app.options.logging) {
-    console.log(chalk.cyan.bold("🔧 Routes Registered:"));
+    console.log(chalk.cyan.bold("📌 Routes Registered:"));
     const routes = app.router.getRoutes();
     Object.keys(routes).forEach((method) => {
       Object.keys(routes[method]).forEach((path) => {
-        console.log(chalk.green(`${figures.tick} ${method.toUpperCase()} ${chalk.bold(path)}`));
+        console.log(chalk.green(`✅ ${method.toUpperCase()} ${chalk.bold(path)}`));
       });
     });
   }
-
+  
   const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
     const start = Date.now();
     const cacheKey = `${req.method}:${req.url}`;
@@ -68,7 +68,7 @@ export default function serverConnection(
   });
 
   server.listen(port, () => {
-    console.log(chalk.blue.bold(`🚀 Server is running on http://localhost:${port}`));
+    if (!callback) console.log(chalk.blue.bold(`🚀 Server is running on http://localhost:${port}`));
     getIP(port);
     callback && callback();
   });

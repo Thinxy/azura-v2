@@ -1,14 +1,14 @@
 import { Middleware, Plugin, RouterHandler, ServerOptions } from "./@types";
-import { RouterManager } from "./router/routerManager";
-import { LRUCache } from "./utils/cacheManager";
 import serverConnection from "./core/server";
 import { swaggerRender } from "./plugins/swagger";
 import setupCors from "./plugins/cors";
+import { RouterManager } from "./router/routerManager";
+import { LRUCache } from "./utils/cacheManager";
 import { loadConfig } from "./utils/configManager";
+import { missingInstanceError } from "./errors/messages/missingInstance.error";
 
 export class AzuraServer {
   private static instance: AzuraServer | null = null;
-
   public router: RouterManager;
   public options: ServerOptions;
   public middleware: Middleware[] = [];
@@ -18,19 +18,36 @@ export class AzuraServer {
   constructor(options?: ServerOptions) {
     this.router = new RouterManager();
     this.options = { jsonParser: options?.jsonParser ?? true, ...options };
-    this.cache = new LRUCache(options?.cacheSize ?? 1000);
 
-    this.initializePlugins();
-    this.setupDefaultRoutes();
+    // Verifica se a instância já foi criada
+    if (!AzuraServer.instance) {
+      AzuraServer.instance = this;
+    }
+
+    this.cache = new LRUCache(this.options.cacheSize ?? 1000);
   }
 
-  private initializePlugins() {
+  private async loadConfig() {
+    try {
+      const config = await loadConfig();
+      if (config) {
+        this.options = { ...this.options, ...config };
+      }
+    } catch (error) {
+      console.error("Erro ao carregar o arquivo de configuração:", error);
+    }
+  }
+
+  private async initializePlugins() {
+    // Carrega a configuração antes de inicializar plugins
+    await this.loadConfig();
+
     if (this.options.cors) this.use(setupCors(this)!);
     if (this.options.swagger) swaggerRender(this.router);
   }
 
   private setupDefaultRoutes() {
-    this.router.addRoute("get", "/favicon.ico", (req, res) => {
+    this.router.addRoute("GET", "/favicon.ico", (req, res) => {
       res.writeHead(204);
       res.end();
     });
@@ -61,18 +78,16 @@ export class AzuraServer {
     this.router.addRoute("DELETE", path, handler);
   }
 
-  static async start(callback?: () => void) {
-    if (!this.instance) {
-      try {
-        const config = await loadConfig();
-        this.instance = new AzuraServer(config);
-      } catch (error) {
-        console.log(error);
-        process.exit(1);
-      }
+  async start(callback?: () => void) {
+    const instance = AzuraServer.instance;
+
+    if (!instance) {
+      throw new missingInstanceError();
     }
 
-    const port = this.instance.options.config?.port ?? 3000;
-    serverConnection(this.instance, port, callback);
+    await instance.initializePlugins();
+
+    const port = instance.options.config?.port ?? 3000;
+    serverConnection(instance, port, callback);
   }
 }
