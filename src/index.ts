@@ -67,7 +67,7 @@ export class AzuraServer {
         const config = await loadConfig();
         this.instance = new AzuraServer(config);
       } catch (error) {
-        console.error("❌ Erro ao carregar a configuração:", error);
+        console.log(error);
         process.exit(1);
       }
     }

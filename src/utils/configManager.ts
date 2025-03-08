@@ -2,20 +2,21 @@ import fs from "fs";
 import path from "path";
 
 import { MissingConfigError } from "../errors/messages/missingConfig.error";
+import { ServerOptions } from "../@types";
 
-const configPath = path.resolve(process.cwd(), ".config.ts");
+const configPath = path.resolve(process.cwd(), "azura.config.ts");
 
-export async function loadConfig() {
+export async function loadConfig(): Promise<ServerOptions> {
   if (!fs.existsSync(configPath)) {
     throw new MissingConfigError();
   }
 
   try {
     const configModule = await import(configPath);
-    const config = configModule.default;
+    const config: ServerOptions = configModule.default;
 
     if (typeof config === "function") {
-      return config();
+      return config;
     }
 
     return config;
