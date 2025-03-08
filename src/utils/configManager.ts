@@ -4,7 +4,7 @@ import path from "path";
 import { MissingConfigError } from "../errors/messages/missingConfig.error";
 import { ServerOptions } from "../@types";
 
-const configPath = path.resolve(process.cwd(), "azura.config.ts");
+const configPath = path.resolve(process.cwd(), "azura.config.*");
 
 export async function loadConfig(): Promise<ServerOptions> {
   if (!fs.existsSync(configPath)) {

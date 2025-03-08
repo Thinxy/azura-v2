@@ -33,7 +33,8 @@ export type RouteMeta = {
 };
 
 interface ConfigParams {
-  port?: number;
+  port?: number | 3001;
+  ipHost?: boolean;
   callback?: () => void;
 }
 

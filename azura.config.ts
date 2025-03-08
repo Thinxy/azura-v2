@@ -5,7 +5,7 @@ const config: ServerOptions = {
     port: 3000,
   },
   logging: true,
-  swagger: true
+  swagger: true,
 };
 
 export default config;

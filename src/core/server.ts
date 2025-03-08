@@ -22,7 +22,7 @@ export default function serverConnection(
       });
     });
   }
-  
+
   const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
     const start = Date.now();
     const cacheKey = `${req.method}:${req.url}`;
@@ -67,11 +67,26 @@ export default function serverConnection(
     next();
   });
 
-  server.listen(port, () => {
-    if (!callback) console.log(chalk.blue.bold(`🚀 Server is running on http://localhost:${port}`));
-    getIP(port);
-    callback && callback();
-  });
+  const tryListen = (port: number) => {
+    server.listen(port, () => {
+      if (!callback)
+        console.log(chalk.blue.bold(`🚀 Server is running on http://localhost:${port}`));
+      if (app.options.config?.ipHost) getIP(port);
+      callback && callback();
+    });
+
+    server.on("error", (err: any) => {
+      if (err.code === "EADDRINUSE") {
+        console.log(chalk.yellow(`Port ${port} is already in use, trying ${port + 1}`));
+        server.close();
+        tryListen(port + 1);
+      } else {
+        console.error(chalk.red(`Server error: ${err.message}`));
+      }
+    });
+  };
+
+  tryListen(port);
 }
 
 function getIP(port: number) {
