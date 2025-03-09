@@ -51,6 +51,9 @@ export default function serverConnection(
             parsedReq.routeMeta = meta;
           };
 
+          const queryString = req.url?.split("?")[1] || "";
+          const query = new URLSearchParams(queryString);
+
           route.handler(parsedReq, response, query, swagger);
 
           const end = Date.now();
@@ -77,7 +80,9 @@ export default function serverConnection(
 
     server.on("error", (err: any) => {
       if (err.code === "EADDRINUSE") {
-        console.log(chalk.yellow(`${figures.info} Port ${port} is already in use, trying ${port + 1}`));
+        console.log(
+          chalk.yellow(`${figures.info} Port ${port} is already in use, trying ${port + 1}`)
+        );
         server.close();
         tryListen(port + 1);
       } else {

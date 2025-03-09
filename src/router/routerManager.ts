@@ -115,27 +115,6 @@ export class RouterManager {
     }
   }
 
-  handleRequest(method: string, path: string, req: any, res: any) {
-    method = method.toUpperCase();
-    path = path.startsWith("/") ? path : `/${path}`;
-
-    console.log(`🔍 Buscando rota: ${method} ${path}`);
-    const parsedUrl = new URL(`http://${req.headers.host}${req.url}`);
-    let query = new URLSearchParams(parsedUrl.search);
-
-    console.log(`🟢 Query recebida:`, query.toString());
-
-    const route = this.routes[method]?.[path];
-    if (route) {
-      console.log(`✅ Rota encontrada: ${method} ${path}`);
-      route.handler(req, res, query, (meta: RouteMeta) => (req.routeMeta = meta));
-    } else {
-      console.log(`❌ 404 - Rota não encontrada: ${method} ${path}`);
-      res.writeHead(404);
-      res.end("Not Found");
-    }
-  }
-
   getRoutes() {
     return this.routes;
   }

@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
 });
 
 // # Example seting routes with swagger:
-app.get("/test", (req, res, swagger) => {
+app.get("/test", (req, res, _query, swagger) => {
   swagger({ summary: "Teste", description: "Teste", tags: ["test"] });
 
   res.send("Teste Swagger");
