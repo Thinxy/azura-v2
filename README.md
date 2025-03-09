@@ -57,6 +57,43 @@ app.get("/test", (req, res, swagger) => {
 app.start();
 ```
 
+# ⚙ Arquivo de configuração
+
+O arquivo de configuração é um arquivo JSON que contém as configurações do servidor. O arquivo de configuração padrão é o `azura.config.json` e está localizado no diretório atual. Você pode criar um arquivo de configuração personalizado ou usar o arquivo padrão.
+
+Exemplo de arquivo de configuração:
+
+```json
+{
+  "config": {
+    "port": 3000,
+    "ipHost": true,
+    "callback": function() {
+      console.log("Server started");
+    }
+  },
+  "logging": true,
+  "jsonParser": true,
+  "cacheSize": 1000,
+  "cors": true,
+  "swagger": true,
+  "database": {
+    "uri": "mongodb://localhost:27017/azura",
+    "name": "azura"
+  }
+}
+```
+
+As configurações disponíveis no arquivo de configuração são:
+
+- `config`: Configurações do servidor, como porta, IP, callback, etc.
+- `logging`: Habilita ou desabilita o registro de eventos no console.
+- `jsonParser`: Habilita ou desabilita o parser de JSON.
+- `cacheSize`: Tamanho do cache do servidor.
+- `cors`: Habilita ou desabilita o CORS.
+- `swagger`: Habilita ou desabilita a documentação do Swagger.
+- `database`: Configurações do banco de dados.
+
 ## 📜 Licença
 
 Azura é um projeto **open-source** licenciado sob **MIT** e afiliado ao **AtosJS**.

@@ -5,7 +5,7 @@
     "rootDir": "./src",
     "outDir": "dist",
     "target": "ESNext",
-    "module": "ESNext", // Gera módulos ESM (Import/Export)
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -15,10 +15,11 @@
     "skipDefaultLibCheck": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "declaration": true, // Gera arquivos de declaração de tipos (.d.ts)
-    "declarationMap": true,
-    "declarationDir": "dist/@types", // Direciona as declarações de tipos para a pasta dist
-    "noEmit": false // Garante que a compilação emite os arquivos
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.spec.ts"]
