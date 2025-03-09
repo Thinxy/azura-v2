@@ -1,4 +1,4 @@
-import http from "http";
+import http from "node:http";
 import os from "os";
 import chalk from "chalk";
 import figures from "figures";

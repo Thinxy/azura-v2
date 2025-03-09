@@ -1,12 +1,14 @@
 {
   "name": "@atosjs/azura",
   "description": "Azura is a simple and lightweight web framework for Node.js",
-  "version": "2.0.1",
-  "main": "dist/index.js",
+  "version": "2.1.0",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs",
+    "types": "./dist/index.d.ts"
   },
   "files": [
     "dist"
@@ -15,7 +17,7 @@
     "start": "node .",
     "test": "ts-node test/index.test.ts",
     "dev": "ts-node -r tsconfig-paths/register --transpiler sucrase/ts-node-plugin src/index.ts",
-    "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./dist"
+    "build": "tsc && node scripts/rename.js"
   },
   "repository": {
     "type": "git",

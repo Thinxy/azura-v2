@@ -1,4 +1,4 @@
-import { IncomingMessage } from "http";
+import { IncomingMessage } from "node:http";
 import { Request } from "../../@types";
 
 export async function parseRequest(req: IncomingMessage, jsonParser: boolean): Promise<Request> {

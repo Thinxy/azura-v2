@@ -19,7 +19,6 @@ export class AzuraServer {
     this.router = new RouterManager();
     this.options = { jsonParser: options?.jsonParser ?? true, ...options };
 
-    // Verifica se a instância já foi criada
     if (!AzuraServer.instance) {
       AzuraServer.instance = this;
     }
@@ -44,13 +43,6 @@ export class AzuraServer {
 
     if (this.options.cors) this.use(setupCors(this)!);
     if (this.options.swagger) swaggerRender(this.router);
-  }
-
-  private setupDefaultRoutes() {
-    this.router.addRoute("GET", "/favicon.ico", (req, res) => {
-      res.writeHead(204);
-      res.end();
-    });
   }
 
   use(middleware: Middleware) {
