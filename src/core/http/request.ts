@@ -1,5 +1,5 @@
 import { IncomingMessage } from "node:http";
-import { Request } from "../../@types";
+import { Request } from "../../types";
 import { URLSearchParams } from "node:url";
 
 export async function parseRequest(req: IncomingMessage, jsonParser: boolean): Promise<Request> {

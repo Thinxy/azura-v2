@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { MissingConfigError } from "../errors/messages/missingConfig.error";
-import { ServerOptions } from "../@types";
+import { ServerOptions } from "../types";
 
 const configPath = path.resolve(process.cwd(), "azura.config.json");
 

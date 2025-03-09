@@ -1,4 +1,4 @@
-import { Request, Response } from "@/@types";
+import { Request, Response } from "@/types";
 import { URLSearchParams } from "node:url";
 
 export abstract class DeleteExtensions {

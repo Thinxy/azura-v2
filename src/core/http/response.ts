@@ -1,5 +1,5 @@
 import { ServerResponse } from "node:http";
-import { Response } from "../../@types";
+import { Response } from "../../types";
 
 export function createResponse(res: ServerResponse): Response {
   return Object.assign(res, {

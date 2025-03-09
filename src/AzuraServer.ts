@@ -1,4 +1,4 @@
-import { Middleware, Plugin, RouterHandler, ServerOptions } from "./@types";
+import { Middleware, Plugin, RouterHandler, ServerOptions } from "./types";
 import serverConnection from "./core/server";
 import { swaggerRender } from "./plugins/swagger";
 import setupCors from "./plugins/cors";

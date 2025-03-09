@@ -8,11 +8,11 @@
   "exports": {
     "import": "./dist/index.js",
     "require": "./dist/index.js",
-    "types": "./dist/@types/index.d.ts"
+    "types": "./dist/types/index.d.ts"
   },
   "files": [
     "dist",
-    "dist/@types"
+    "dist/types"
   ],
   "scripts": {
     "start": "node .",

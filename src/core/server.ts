@@ -6,7 +6,7 @@ import figures from "figures";
 import { AzuraServer } from "../AzuraServer";
 import { createResponse } from "./http/response";
 import { parseRequest } from "./http/request";
-import { Response, RouteMeta } from "../@types";
+import { Response, RouteMeta } from "../types";
 
 export default function serverConnection(
   app: AzuraServer,

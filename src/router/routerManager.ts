@@ -1,7 +1,7 @@
 import { readdirSync, existsSync } from "fs";
 import { join, dirname, resolve } from "path";
 import { fileURLToPath, parse } from "url";
-import { RouteMeta, RouterHandler, ServerOptions } from "../@types";
+import { RouteMeta, RouterHandler, ServerOptions } from "../types";
 import chalk from "chalk";
 import fs from "fs";
 
