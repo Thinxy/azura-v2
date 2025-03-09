@@ -57,6 +57,34 @@ app.get("/test", (req, res, swagger) => {
 app.start();
 ```
 
+# 🔗 Criando Rotas
+
+Crie uma pasta chamada `routes` dentro do diretório `src` e crie um arquivo chamado `hello.ts` dentro da pasta `routes`. Dentro do arquivo `hello.ts` crie uma classe chamada `Hello` que herda de `GetExtensions` ou `PostExtensions` ou `PutExtensions` ou `DeleteExtensions`. Em seguida, implemente a função `handle` para que ela execute a lógica da rota.
+
+```ts
+import { GetExtensions } from "@atosjs/azura";
+
+export default class Hello extends GetExtensions {
+  handle(req: Request, res: Response, query: URLSearchParams) {
+    const q = query.toString();
+    res.send({ message: "Hello World!", query: q });
+  }
+}
+```
+
+# 🔎 Criando Redirecionamentos
+
+Crie uma pasta chamada `redirects` dentro do diretório `src` e crie um arquivo chamado `oi.ts` dentro da pasta `redirects`. Dentro do arquivo `oi.ts` crie uma classe chamada `Oi` que herda de `RedirectExtensions`. Em seguida, implemente as propriedades `from` e `to` para que ela execute a lógica do redirecionamento.
+
+```ts
+import { RedirectExtensions } from "@atosjs/azura";
+
+export default class Google extends RedirectExtensions {
+  static from = "/google";
+  static to = "https://www.google.com.br";
+}
+```
+
 # ⚙ Arquivo de configuração
 
 O arquivo de configuração é um arquivo JSON que contém as configurações do servidor. O arquivo de configuração padrão é o `azura.config.json` e está localizado no diretório atual. Você pode criar um arquivo de configuração personalizado ou usar o arquivo padrão.
@@ -77,7 +105,15 @@ Exemplo de arquivo de configuração:
   "database": {
     "uri": "mongodb://localhost:27017/azura",
     "name": "azura"
-  }
+  },
+  "routesPath": "src/routes", // default: src/routes (automatically finds routes in src/routes)
+  "redirectsPath": "src/redirects" // default: src/redirects (automatically finds redirects in src/redirects)
+  "redirects": [
+    {
+      "from": "/old-route",
+      "to": "/new-route"
+    }
+  ]
 }
 ```
 
@@ -90,6 +126,9 @@ As configurações disponíveis no arquivo de configuração são:
 - `cors`: Habilita ou desabilita o CORS.
 - `swagger`: Habilita ou desabilita a documentação do Swagger.
 - `database`: Configurações do banco de dados.
+- `routesPath`: Caminho para a pasta de rotas personalizada ou utilizar a pasta padrão.
+- `redirectsPath`: Caminho para a pasta de redirecionamentos personalizada ou utilizar a pasta padrão.
+- `redirects`: Array de redirecionamentos caso queira utilizar uma pasta pode ser utilizada "/src/redirects" ou uma personalizada no parametro redirectsPath.
 
 ## 📜 Licença
 
