@@ -40,7 +40,6 @@ export class AzuraServer {
   }
 
   private async initializePlugins() {
-    // Carrega a configuração antes de inicializar plugins
     await this.loadConfig();
 
     if (this.options.cors) this.use(setupCors(this)!);
