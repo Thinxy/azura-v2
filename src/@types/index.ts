@@ -1,10 +1,12 @@
 import { ServerResponse } from "node:http";
 import { AzuraServer } from "../AzuraServer";
+import { URLSearchParams } from "node:url";
 
 export type Plugin = (server: AzuraServer) => void;
 export type RouterHandler = (
   req: Request,
   res: Response,
+  query: URLSearchParams,
   swagger: (meta: RouteMeta) => void
 ) => void;
 export type Middleware = (req: Request, res: Response, next: () => void) => void;
@@ -65,7 +67,7 @@ export interface Request {
   url: string;
   path: string;
   params: { [key: string]: string };
-  query: { [key: string]: string };
+  query: URLSearchParams;
   body: any;
   routeMeta?: RouteMeta;
 }

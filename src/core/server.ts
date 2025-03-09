@@ -51,7 +51,7 @@ export default function serverConnection(
             parsedReq.routeMeta = meta;
           };
 
-          route.handler(parsedReq, response, swagger);
+          route.handler(parsedReq, response, query, swagger);
 
           const end = Date.now();
           const duration = end - start;

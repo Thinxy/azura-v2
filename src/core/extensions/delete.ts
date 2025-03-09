@@ -1,4 +1,7 @@
-export class DeleteExtensions {
+import { Request, Response } from "@/@types";
+import { URLSearchParams } from "node:url";
+
+export abstract class DeleteExtensions {
   method: string = "DELETE";
   path: string;
 
@@ -7,7 +10,5 @@ export class DeleteExtensions {
     this.path = `/${filename.replace("delete", "")}`;
   }
 
-  handle(req: any, res: any, swagger: any) {
-    throw new Error("Método não implementado");
-  }
+  abstract handle(req: Request, res: Response, query: URLSearchParams, swagger?: any): void;
 }

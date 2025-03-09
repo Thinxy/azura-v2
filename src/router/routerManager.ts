@@ -1,6 +1,6 @@
 import { readdirSync, existsSync } from "fs";
 import { join, dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, parse } from "url";
 import { RouteMeta, RouterHandler, ServerOptions } from "../@types";
 import chalk from "chalk";
 import fs from "fs";
@@ -14,11 +14,11 @@ export class RouterManager {
   constructor() {}
 
   addRoute(method: string, path: string, handler: RouterHandler) {
-    const normalizedMethod = method.toUpperCase();
-    if (!this.routes[normalizedMethod]) {
-      this.routes[normalizedMethod] = {};
-    }
-    this.routes[normalizedMethod][path] = { handler };
+    method = method.toUpperCase();
+    path = path.startsWith("/") ? path : `/${path}`;
+
+    if (!this.routes[method]) this.routes[method] = {};
+    this.routes[method][path] = { handler };
   }
 
   async loadRedirectClasses(config: ServerOptions) {
@@ -116,18 +116,21 @@ export class RouterManager {
   }
 
   handleRequest(method: string, path: string, req: any, res: any) {
-    const normalizedMethod = method.toUpperCase();
-    console.log(`🔍 Buscando rota: ${normalizedMethod} ${path}`);
+    method = method.toUpperCase();
+    path = path.startsWith("/") ? path : `/${path}`;
 
-    const route = this.routes[normalizedMethod]?.[path];
+    console.log(`🔍 Buscando rota: ${method} ${path}`);
+    const parsedUrl = new URL(`http://${req.headers.host}${req.url}`);
+    let query = new URLSearchParams(parsedUrl.search);
+
+    console.log(`🟢 Query recebida:`, query.toString());
+
+    const route = this.routes[method]?.[path];
     if (route) {
-      console.log(`✅ Encontrada: ${normalizedMethod} ${path}`);
-      const swagger = (meta: RouteMeta) => {
-        req.routeMeta = meta;
-      };
-      route.handler(req, res, swagger);
+      console.log(`✅ Rota encontrada: ${method} ${path}`);
+      route.handler(req, res, query, (meta: RouteMeta) => (req.routeMeta = meta));
     } else {
-      console.log(`❌ 404 - Rota não encontrada: ${normalizedMethod} ${path}`);
+      console.log(`❌ 404 - Rota não encontrada: ${method} ${path}`);
       res.writeHead(404);
       res.end("Not Found");
     }
