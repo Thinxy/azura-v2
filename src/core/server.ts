@@ -77,11 +77,12 @@ export default function serverConnection(
 
     server.on("error", (err: any) => {
       if (err.code === "EADDRINUSE") {
-        console.log(chalk.yellow(`Port ${port} is already in use, trying ${port + 1}`));
+        console.log(chalk.yellow(`${figures.info} Port ${port} is already in use, trying ${port + 1}`));
         server.close();
         tryListen(port + 1);
       } else {
-        console.error(chalk.red(`Server error: ${err.message}`));
+        console.error("Error starting server on port: ", port, err);
+        process.exit(1);
       }
     });
   };
