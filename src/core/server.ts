@@ -3,7 +3,7 @@ import os from "os";
 import chalk from "chalk";
 import figures from "figures";
 
-import { AzuraServer } from "..";
+import { AzuraServer } from "../AzuraServer";
 import { createResponse } from "./http/response";
 import { parseRequest } from "./http/request";
 import { Response, RouteMeta } from "../@types";
@@ -71,7 +71,7 @@ export default function serverConnection(
     server.listen(port, () => {
       if (!callback)
         console.log(chalk.blue.bold(`🚀 Server is running on http://localhost:${port}`));
-      if (app.options.config?.ipHost) getIP(port);
+      if (app.options.server?.ipHost) getIP(port);
       callback && callback();
     });
 

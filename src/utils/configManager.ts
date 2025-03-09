@@ -11,7 +11,8 @@ export async function loadConfig(): Promise<ServerOptions> {
   }
 
   try {
-    const config: ServerOptions = require(configPath);
+    const fileContent = await fs.promises.readFile(configPath, "utf-8");
+    const config: ServerOptions = JSON.parse(fileContent);
 
     return config;
   } catch (error) {

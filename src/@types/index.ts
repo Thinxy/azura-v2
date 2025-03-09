@@ -1,5 +1,5 @@
 import { ServerResponse } from "node:http";
-import { AzuraServer } from "..";
+import { AzuraServer } from "../AzuraServer";
 
 export type Plugin = (server: AzuraServer) => void;
 export type RouterHandler = (
@@ -38,17 +38,27 @@ interface ConfigParams {
   callback?: () => void;
 }
 
+interface Redirect {
+  from: string;
+  to: string;
+  blank?: boolean;
+}
+
 export interface ServerOptions {
-  config?: ConfigParams;
+  server?: ConfigParams;
   logging?: boolean;
   jsonParser?: boolean;
   cacheSize?: number;
+  cacheTTL?: number;
   cors?: boolean;
   swagger?: boolean;
   database?: {
     uri: string;
     name?: string;
   };
+  routesPath?: string;
+  redirectsPath?: string;
+  redirects?: Redirect[];
 }
 export interface Request {
   method: string;

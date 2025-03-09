@@ -1,4 +1,4 @@
-import { AzuraServer } from "..";
+import { AzuraServer } from "../AzuraServer";
 
 export default function setupCors(server: AzuraServer) {
   server.use((req, res, next) => {

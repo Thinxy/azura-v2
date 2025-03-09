@@ -65,12 +65,9 @@ Exemplo de arquivo de configuração:
 
 ```json
 {
-  "config": {
+  "server": {
     "port": 3000,
     "ipHost": true,
-    "callback": function() {
-      console.log("Server started");
-    }
   },
   "logging": true,
   "jsonParser": true,
@@ -86,7 +83,7 @@ Exemplo de arquivo de configuração:
 
 As configurações disponíveis no arquivo de configuração são:
 
-- `config`: Configurações do servidor, como porta, IP, callback, etc.
+- `server`: Configurações do servidor, como porta, IP, etc.
 - `logging`: Habilita ou desabilita o registro de eventos no console.
 - `jsonParser`: Habilita ou desabilita o parser de JSON.
 - `cacheSize`: Tamanho do cache do servidor.

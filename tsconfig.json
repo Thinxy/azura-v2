@@ -2,13 +2,13 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "removeComments": true,
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "dist",
     "target": "ESNext",
     "declaration": true,
     "sourceMap": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,13 +20,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@@/*": ["./test/*"]
+      "@@/*": ["./test/*"],
+      "@types": ["./src/@types"]
     },
-    "typeRoots": ["./node_modules/@types"],
     "declarationMap": true,
     "declarationDir": "dist",
     "noEmit": false
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["src", "test", "src/@types"],
+  "exclude": ["node_modules"]
 }
