@@ -21,6 +21,8 @@ export default {
     resolve(),
     commonjs(),
     typescript({
+      declarationDir: "dist", // Direciona as declarações de tipos para a pasta dist
+      declaration: true,
       tsconfig: "./tsconfig.json", // Garantir que o TypeScript seja integrado
     }),
   ],

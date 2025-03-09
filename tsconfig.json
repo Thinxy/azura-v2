@@ -17,7 +17,7 @@
     "importHelpers": true,
     "declaration": true, // Gera arquivos de declaração de tipos (.d.ts)
     "declarationMap": true,
-    "declarationDir": "dist", // Direciona as declarações de tipos para a pasta dist
+    "declarationDir": "dist/@types", // Direciona as declarações de tipos para a pasta dist
     "noEmit": false // Garante que a compilação emite os arquivos
   },
   "include": ["src"],

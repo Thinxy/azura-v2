@@ -11,7 +11,8 @@
     "types": "./dist/index.d.ts"
   },
   "files": [
-    "dist"
+    "dist",
+    "dist/@types"
   ],
   "scripts": {
     "start": "node .",
