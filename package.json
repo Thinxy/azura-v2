@@ -1,7 +1,7 @@
 {
   "name": "@atosjs/azura",
   "description": "Azura is a simple and lightweight web framework for Node.js",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
     "start": "node .",
     "test": "ts-node test/index.test.ts",
     "dev": "ts-node -r tsconfig-paths/register --transpiler sucrase/ts-node-plugin src/index.ts",
-    "build": "rollup -c"
+    "build": "node build.js"
   },
   "repository": {
     "type": "git",
@@ -39,15 +39,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.13.0",
-    "rollup": "^3.0.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "typescript": "^5.0.0"
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "chalk": "4.1.2",
     "figures": "3.2.0",
+    "glob": "^11.0.1",
     "tslib": "^2.8.1"
   },
   "peerDependencies": {
